@@ -11,7 +11,34 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
 
+    <developers>
+        <developer>
+            <name>mireal</name>
+            <email>mirrorming@qq.com</email>
+            <url>https://www.mirrorming.cn</url>
+        </developer>
+    </developers>
+    <scm>
+        <url>https://github.com/mirrormingzZ/text2date-spring-boot-starter</url>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>oss</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>oss</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>io.github.mirrormingzZ</groupId>
