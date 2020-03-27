@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Cycle
+ */
 @Data
 public class Cycle {
     public static final int CYCLE_TYPE_NONE = 0;

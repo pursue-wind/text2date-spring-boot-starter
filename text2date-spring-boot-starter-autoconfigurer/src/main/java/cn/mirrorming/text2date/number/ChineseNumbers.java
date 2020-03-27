@@ -9,6 +9,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * 中文数字转换
+ *
+ * @author Mireal
+ */
 @Slf4j
 public class ChineseNumbers {
     private static final String[] DIGITS = {"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"};

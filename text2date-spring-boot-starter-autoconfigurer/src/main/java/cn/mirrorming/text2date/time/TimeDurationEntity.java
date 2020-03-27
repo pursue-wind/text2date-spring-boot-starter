@@ -2,6 +2,9 @@ package cn.mirrorming.text2date.time;
 
 import lombok.Data;
 
+/**
+ * 持续时间
+ */
 @Data
 public class TimeDurationEntity {
     private String original;

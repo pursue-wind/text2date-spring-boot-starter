@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 
 /**
- * thread safe
+ * 持续时间识别器
  */
 @Slf4j
 public class TimeDurationEntityRecognizer {

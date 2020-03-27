@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * TimeEntity
+ */
 @Data
 public class TimeEntity {
     private String original;

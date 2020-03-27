@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * thread safe
+ * 时间增量实体识别器
  */
 @Slf4j
 public class TimeDeltaEntityRecognizer {

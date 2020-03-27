@@ -2,6 +2,9 @@ package cn.mirrorming.text2date.time;
 
 import lombok.Data;
 
+/**
+ * TimeDeltaEntity
+ */
 @Data
 public class TimeDeltaEntity {
     private String original;
