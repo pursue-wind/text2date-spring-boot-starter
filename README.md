@@ -1,5 +1,7 @@
 # 提取中文文本里面的时间 text2date-spring-boot-starter
 
+- 2020-3-27 添加：半小时前/后和xx小时前/后 的解析
+
 ### 参考项目：
 > mandarintools：https://github.com/luoxuefeng01/mandarintools-1
 
