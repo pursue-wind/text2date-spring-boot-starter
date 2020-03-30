@@ -37,6 +37,12 @@ public class TimeDeltaEntityRecognizer {
         this(new FileInputStream(file));
     }
 
+    /**
+     * TimeDeltaEntityRecognizer
+     *
+     * @param in InputStream
+     * @throws IOException IO异常
+     */
     public TimeDeltaEntityRecognizer(InputStream in) throws IOException {
         regexList = IOUtils.readLines(in, "UTF-8")
                 .stream()
@@ -61,6 +67,12 @@ public class TimeDeltaEntityRecognizer {
         );
     }
 
+    /**
+     * parse 主要方法
+     *
+     * @param text 需要解析的文本
+     * @return res
+     */
     public List<TimeDeltaEntity> parse(String text) {
         List<TimeDeltaEntity> result = new ArrayList<>();
         int offset;
@@ -89,6 +101,12 @@ public class TimeDeltaEntityRecognizer {
         return result;
     }
 
+    /**
+     * normalizeTimeDeltaString
+     *
+     * @param text 需要解析的文本
+     * @return res
+     */
     private String normalizeTimeDeltaString(String text) {
         Pattern p = Pattern.compile("[一二两三四五六七八九十]+");
         Matcher m = p.matcher(text);
@@ -104,6 +122,12 @@ public class TimeDeltaEntityRecognizer {
         return sb.toString();
     }
 
+    /**
+     * parseTimeDelta
+     *
+     * @param text 需要解析的文本
+     * @return res
+     */
     private Long parseTimeDelta(String text) {
         text = normalizeTimeDeltaString(text);
         long year = parseYear(text);
@@ -122,6 +146,12 @@ public class TimeDeltaEntityRecognizer {
         return delta;
     }
 
+    /**
+     * validTime
+     *
+     * @param arr
+     * @return res
+     */
     private boolean validTime(long[] arr) {
         long sum = Arrays.stream(arr).sum();
         if (sum <= -5) {
@@ -184,6 +214,12 @@ public class TimeDeltaEntityRecognizer {
     private static final Pattern HALF_MONTH_DURATION_PATTERN = Pattern.compile("(半个?(月))");
     private static final Pattern MONTH_DURATION_PATTERN = Pattern.compile("([0-9一二两三四五六七八九十]+)个?(月)");
 
+    /**
+     * 解析月份
+     *
+     * @param text 需要解析的文本
+     * @return res
+     */
     private long parseMonth(String text) {
         long month = -1;
         Matcher match = HALF_MONTH_DURATION_PATTERN.matcher(text);
@@ -200,6 +236,12 @@ public class TimeDeltaEntityRecognizer {
 
     private static final Pattern WEEK_DURATION_PATTERN = Pattern.compile("([0-9一二两三四五六七八九十]+)(周)");
 
+    /**
+     * parseWeek
+     *
+     * @param text 需要解析的文本
+     * @return res
+     */
     private long parseWeek(String text) {
         long week = -1;
         Matcher match = WEEK_DURATION_PATTERN.matcher(text);
@@ -209,6 +251,12 @@ public class TimeDeltaEntityRecognizer {
 
     private static final Pattern DAY_DURATION_PATTERN = Pattern.compile("([0-9一二两三四五六七八九十]+)天");
 
+    /**
+     * parseDay
+     *
+     * @param text 需要解析的文本
+     * @return res
+     */
     private long parseDay(String text) {
         long day = -1;
         if (text.contains("半天")) {
@@ -226,6 +274,12 @@ public class TimeDeltaEntityRecognizer {
     private static final Pattern HALF_HOUR_DURATION_PATTERN = Pattern.compile("(半个?(小时|钟头))");
     private static final Pattern HOUR_DURATION_PATTERN = Pattern.compile("([0-9一二两三四五六七八九十]+)个?(小时|钟头)");
 
+    /**
+     * parseHour
+     *
+     * @param text 需要解析的文本
+     * @return res
+     */
     private long parseHour(String text) {
         Matcher match = HALF_HOUR_DURATION_PATTERN.matcher(text);
         long hour = -1;
@@ -244,8 +298,10 @@ public class TimeDeltaEntityRecognizer {
     private static final Pattern MINUTE_PATTERN = Pattern.compile("([0-9一二两三四五六七八九十]+)(分钟)");
 
     /**
-     * @param text
-     * @return
+     * parseMinute
+     *
+     * @param text 需要解析的文本
+     * @return res
      */
     private long parseMinute(String text) {
         /*

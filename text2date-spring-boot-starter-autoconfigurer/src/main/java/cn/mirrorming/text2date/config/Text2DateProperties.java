@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
+ * Text2DateProperties
+ *
  * @author Mireal
  */
 @Data

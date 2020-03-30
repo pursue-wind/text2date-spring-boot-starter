@@ -48,6 +48,12 @@ public class Cycle {
     private static Pattern MONTHLY_PATTERN = Pattern.compile("每月([0-3]?[0-9])[日号]");
     private static Pattern YEAR_PATTERN = Pattern.compile("每年([0-1]?[0-9])月([0-3]?[0-9])[日号]");
 
+    /**
+     * parseCycle
+     *
+     * @param text 需要解析的文本
+     * @return res
+     */
     public static Cycle parseCycle(String text) {
         if (text.contains("每天")) {
             return new Cycle(CYCLE_TYPE_DAY);

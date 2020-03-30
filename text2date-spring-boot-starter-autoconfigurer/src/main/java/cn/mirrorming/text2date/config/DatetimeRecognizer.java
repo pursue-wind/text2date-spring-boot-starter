@@ -18,11 +18,25 @@ import java.util.stream.Collectors;
 public class DatetimeRecognizer {
     Text2DateProperties text2DateProperties;
 
+    /**
+     * 文本转 {@link TimeEntity}
+     *
+     * @param text 需要解析的文本
+     * @return {@link TimeEntity}
+     * @throws IOException IO异常
+     */
     public List<TimeEntity> parse(String text) throws IOException {
         TimeEntityRecognizer timeEntityRecognizer = new TimeEntityRecognizer();
         return timeEntityRecognizer.parse(text);
     }
 
+    /**
+     * 文本转 {@link Date}
+     *
+     * @param text 需要解析的文本
+     * @return {@link Date}
+     * @throws IOException IO异常
+     */
     public List<Date> dateParse(String text) throws IOException {
         TimeEntityRecognizer timeEntityRecognizer = new TimeEntityRecognizer();
         return timeEntityRecognizer.parse(text).stream().map(TimeEntity::getValue).collect(Collectors.toList());

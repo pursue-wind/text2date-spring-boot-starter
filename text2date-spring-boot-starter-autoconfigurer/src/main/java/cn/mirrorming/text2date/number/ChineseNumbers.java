@@ -186,7 +186,7 @@ public class ChineseNumbers {
      * 将英文表示的数字转化为中文表示的数字，支持负数、小数、不支持分数
      *
      * @param text 英文表示的数字，比如：2009000，5.3，-5.3
-     * @return
+     * @return String
      */
     public static String englishNumberToChinese(String text) {
         if (StringUtils.isEmpty(text)) {
@@ -222,8 +222,8 @@ public class ChineseNumbers {
     /**
      * 直接映射英文数字为中文数字，对应输入的小数部分如此处理
      *
-     * @param text
-     * @return
+     * @param text 需要解析的文本
+     * @return res
      */
     private static String englishNumberToChineseBrief(String text) {
         String result = "";
@@ -236,8 +236,8 @@ public class ChineseNumbers {
     /**
      * 非输入的小数部分需要做更复杂的转换
      *
-     * @param text
-     * @return
+     * @param text 需要解析的文本
+     * @return res
      */
     private static String englishNumberToChineseFull(String text) {
         int power = 0;
@@ -317,8 +317,8 @@ public class ChineseNumbers {
     /**
      * 输入如果完全匹配中文对应的数字，直接调用此函数映射输出
      *
-     * @param text
-     * @return
+     * @param text 需要解析的文本
+     * @return res
      */
     private static long chineseToEnglishBrief(String text) {
         char[] chars = text.toCharArray();
@@ -333,8 +333,8 @@ public class ChineseNumbers {
     /**
      * 对应复杂的中文数字串
      *
-     * @param text
-     * @return
+     * @param text 需要解析的文本
+     * @return res
      */
     private static double chineseToEnglishFull(String text) {
         text = text.replace("万亿", "兆");
@@ -471,8 +471,8 @@ public class ChineseNumbers {
         return total;
     }
 
-    public static void main(String[] args) {
-        double total = ChineseNumbers.chineseToEnglishFull("四千五百零四万四千三百一十八");
-        log.debug("{}", total);
-    }
+//    public static void main(String[] args) {
+//        double total = ChineseNumbers.chineseToEnglishFull("四千五百零四万四千三百一十八");
+//        log.debug("{}", total);
+//    }
 }

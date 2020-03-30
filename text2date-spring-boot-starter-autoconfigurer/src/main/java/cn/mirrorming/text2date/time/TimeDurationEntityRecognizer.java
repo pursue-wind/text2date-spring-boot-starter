@@ -38,6 +38,12 @@ public class TimeDurationEntityRecognizer {
         this(new FileInputStream(file));
     }
 
+    /**
+     * TimeDurationEntityRecognizer
+     *
+     * @param in InputStream
+     * @throws IOException IO异常
+     */
     public TimeDurationEntityRecognizer(InputStream in) throws IOException {
         regexList = IOUtils.readLines(in, "UTF-8").stream().map(StringUtils::stripToNull)
                 .filter(item -> StringUtils.isNotEmpty(item) && !item.startsWith("#")).distinct()
@@ -52,6 +58,12 @@ public class TimeDurationEntityRecognizer {
                 (end - start));
     }
 
+    /**
+     * parse
+     *
+     * @param text 文本
+     * @return TimeDurationEntity
+     */
     public List<TimeDurationEntity> parse(String text) {
         List<TimeDurationEntity> result = new ArrayList<>();
         int offset;
@@ -80,6 +92,9 @@ public class TimeDurationEntityRecognizer {
         return result;
     }
 
+    /**
+     * normalizeDurationString
+     */
     private String normalizeDurationString(String text) {
         Pattern p = Pattern.compile("[一二两三四五六七八九十]+");
         Matcher m = p.matcher(text);
@@ -95,6 +110,12 @@ public class TimeDurationEntityRecognizer {
         return sb.toString();
     }
 
+    /**
+     * parseDuration
+     *
+     * @param text 需要解析的文本
+     * @return res
+     */
     private Long parseDuration(String text) {
         text = normalizeDurationString(text);
         long year = parseYear(text);
@@ -109,6 +130,12 @@ public class TimeDurationEntityRecognizer {
         return Arrays.stream(arr).filter(item -> item > 0).sum();
     }
 
+    /**
+     * validTime
+     *
+     * @param arr
+     * @return res
+     */
     private boolean validTime(long arr[]) {
         long sum = Arrays.stream(arr).sum();
         if (sum <= -5) {
@@ -155,6 +182,12 @@ public class TimeDurationEntityRecognizer {
 
     private static final Pattern YEAR_DURATION_PATTERN = Pattern.compile("([0-9一二两三四五六七八九十])(年)");
 
+    /**
+     * parseYear
+     *
+     * @param text 需要解析的文本
+     * @return res
+     */
     private long parseYear(String text) {
         long year = -1;
         if (text.contains("半年")) {
@@ -172,6 +205,12 @@ public class TimeDurationEntityRecognizer {
     private static final Pattern HALF_MONTH_DURATION_PATTERN = Pattern.compile("(半个?(月))");
     private static final Pattern MONTH_DURATION_PATTERN = Pattern.compile("([0-9一二两三四五六七八九十]+)个?(月)");
 
+    /**
+     * parseMonth
+     *
+     * @param text 需要解析的文本
+     * @return res
+     */
     private long parseMonth(String text) {
         long month = -1;
         Matcher match = HALF_MONTH_DURATION_PATTERN.matcher(text);
@@ -214,6 +253,12 @@ public class TimeDurationEntityRecognizer {
     private static final Pattern HALF_HOUR_DURATION_PATTERN = Pattern.compile("(半个?(小时|钟头))");
     private static final Pattern HOUR_DURATION_PATTERN = Pattern.compile("([0-9一二两三四五六七八九十]+)个?(小时|钟头)");
 
+    /**
+     * parseHour
+     *
+     * @param text 需要解析的文本
+     * @return res
+     */
     private long parseHour(String text) {
         Matcher match = HALF_HOUR_DURATION_PATTERN.matcher(text);
         long hour = -1;
@@ -232,8 +277,8 @@ public class TimeDurationEntityRecognizer {
     private static final Pattern MINUTE_PATTERN = Pattern.compile("([0-9一二两三四五六七八九十]+)(分钟)");
 
     /**
-     * @param text
-     * @return
+     * @param text 需要解析的文本
+     * @return res
      */
     private long parseMinute(String text) {
         /*

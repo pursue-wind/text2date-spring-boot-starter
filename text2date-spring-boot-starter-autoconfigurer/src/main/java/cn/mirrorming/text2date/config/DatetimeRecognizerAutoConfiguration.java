@@ -16,6 +16,11 @@ public class DatetimeRecognizerAutoConfiguration {
     @Autowired
     Text2DateProperties text2DateProperties;
 
+    /**
+     * datetimeRecognizer
+     *
+     * @return DatetimeRecognizer
+     */
     @Bean
     public DatetimeRecognizer datetimeRecognizer() {
         DatetimeRecognizer recognizer = new DatetimeRecognizer();

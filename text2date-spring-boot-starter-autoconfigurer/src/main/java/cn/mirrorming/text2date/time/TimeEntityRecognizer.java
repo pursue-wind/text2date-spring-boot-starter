@@ -1,12 +1,39 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2020 mirrorming
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package cn.mirrorming.text2date.time;
 
-import cn.mirrorming.text2date.number.ChineseNumbers;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.TimeZone;
+
+import cn.mirrorming.text2date.number.ChineseNumbers;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -49,14 +76,29 @@ public class TimeEntityRecognizer {
         log.info("pattern initialized for {} patterns, time used(ms):{}", regexList.size(), (end - start));
     }
 
+    /**
+     * @param text 需要解析的文本
+     * @return res
+     */
     public List<TimeEntity> parse(String text) {
         return parse(text, CHINA_TIME_ZONE);
     }
 
+    /**
+     * @param text     text
+     * @param timeZone TimeZone
+     * @return res
+     */
     public List<TimeEntity> parse(String text, TimeZone timeZone) {
         return parse(text, timeZone, Calendar.getInstance(timeZone).getTime());
     }
 
+    /**
+     * @param text     text
+     * @param timeZone timeZone
+     * @param relative relative
+     * @return res
+     */
     public List<TimeEntity> parse(String text, TimeZone timeZone, Date relative) {
         List<TimeEntity> result = new ArrayList<>();
         int offset;
@@ -127,9 +169,6 @@ public class TimeEntityRecognizer {
 
     /**
      * 参考StringPreHandlingModule, 将中文表达的日期、时间转化为数字表达
-     *
-     * @param text
-     * @return
      */
     static final Pattern NUMBER_P = Pattern.compile("[一二两三四五六七八九十]+");
 
@@ -153,6 +192,10 @@ public class TimeEntityRecognizer {
         return sb.toString();
     }
 
+    /**
+     * @param arr arr
+     * @return res
+     */
     private boolean validTime(int[] arr) {
         int sum = Arrays.stream(arr).sum();
         //month
@@ -178,6 +221,10 @@ public class TimeEntityRecognizer {
         return sum != -6;
     }
 
+    /**
+     * @param text 需要解析的文本
+     * @return res
+     */
     private Date parseTime(String text, TimeZone timeZone, Date relative, boolean isDefaultRelative, TimeEntity timeEntity) {
         text = normalizeTimeString(text);
         int year = parseYear(text);
@@ -228,20 +275,17 @@ public class TimeEntityRecognizer {
 
     /**
      * 将第一个下标对应数值为正的前面几个字段都设置为相对时间的对应值
-     *
-     * @param arr
-     * @param relative
      */
     private static final Pattern TIME_MODIFIER_PATTERN = Pattern.compile("(早|早晨|早上|上午|中午|午后|下午|傍晚|晚上|晚间|夜里|夜|凌晨|深夜|pm|PM)");
 
     /**
      * 对于arr数组中头部==-1的元素，用相对时间替换，同时对于当天已经是过去的时间表达，偏移到当天12小时之后
      *
-     * @param text
-     * @param arr
-     * @param timeZone
-     * @param relative
-     * @param isDefaultRelative
+     * @param text              需要解析的文本
+     * @param arr               arr
+     * @param timeZone          t
+     * @param relative          t
+     * @param isDefaultRelative t
      */
     private void normalize(String text, int[] arr, TimeZone timeZone, Date relative, boolean isDefaultRelative) {
         int j = 0;
@@ -359,8 +403,8 @@ public class TimeEntityRecognizer {
      * 傍晚：17-19
      * 晚上：19-24
      *
-     * @param text
-     * @return
+     * @param text 需要解析的文本
+     * @return res
      */
     private int parseHour(String text) {
         /*
@@ -447,8 +491,8 @@ public class TimeEntityRecognizer {
     private static final Pattern THREE_QUARTER_PATTERN = Pattern.compile("(?<=[点时])[3三]刻(?!钟)");
 
     /**
-     * @param text
-     * @return
+     * @param text 需要解析的文本
+     * @return res
      */
     private int parseMinute(String text) {
         /*
@@ -770,7 +814,11 @@ public class TimeEntityRecognizer {
 
     /**
      * 设置当前时间相关的时间表达式
-     * <p>
+     *
+     * @param text     需要解析的文本
+     * @param timeZone timeZone
+     * @param relative relative
+     * @param arr      arr
      */
     public void parseCurrentRelative(String text, TimeZone timeZone, Date relative, int[] arr) {
         Calendar calendar = Calendar.getInstance(timeZone);
