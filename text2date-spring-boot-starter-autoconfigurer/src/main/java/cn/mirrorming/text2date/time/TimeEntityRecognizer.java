@@ -32,6 +32,7 @@ import java.util.TimeZone;
 import cn.mirrorming.text2date.number.ChineseNumbers;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -45,12 +46,13 @@ import java.util.stream.Collectors;
  * 时间实体识别器 主要工作类
  */
 @Slf4j
+@Component
 public class TimeEntityRecognizer {
     private static final TimeZone CHINA_TIME_ZONE = TimeZone.getTimeZone("Asia/Shanghai");
     private Pattern pattern;
     private List<String> regexList;
 
-    public TimeEntityRecognizer() throws IOException {
+    public TimeEntityRecognizer() {
         this(TimeEntityRecognizer.class.getResourceAsStream("/time.regex"));
     }
 
@@ -58,27 +60,34 @@ public class TimeEntityRecognizer {
         this(new FileInputStream(file));
     }
 
-    public TimeEntityRecognizer(InputStream in) throws IOException {
-        regexList = IOUtils.readLines(in, "UTF-8")
-                .stream()
-                .map(StringUtils::stripToNull)
-                .filter(item -> StringUtils.isNotEmpty(item) && !item.startsWith("#")).distinct()
-//                .sorted((o1, o2) -> o2.length() - o1.length())
-                .collect(Collectors.toList());
+    public TimeEntityRecognizer(InputStream in) {
+        try {
+            regexList = IOUtils.readLines(in, "UTF-8")
+                    .stream()
+                    .map(StringUtils::stripToNull)
+                    .filter(item -> StringUtils.isNotEmpty(item) && !item.startsWith("#")).distinct()
+                    //                .sorted((o1, o2) -> o2.length() - o1.length())
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            log.error("读取文件失败");
+        }
 
         if (log.isTraceEnabled()) {
             log.trace("input regex[size={}, text={}]", regexList.size(), regexList);
         }
         long start = System.currentTimeMillis();
         //读取pattern
-        this.pattern = Pattern.compile(regexList.stream().map(item -> "(" + item + ")").collect(Collectors.joining("|")));
+        this.pattern = Pattern.compile(regexList.stream()
+                .map(item -> "(" + item + ")")
+                .collect(Collectors.joining("|")));
+
         long end = System.currentTimeMillis();
 //        log.info("pattern initialized for {} patterns, time used(ms):{}", regexList.size(), (end - start));
     }
 
     /**
      * @param text 需要解析的文本
-     * @return res
+     * @return List<TimeEntity>
      */
     public List<TimeEntity> parse(String text) {
         return parse(text, CHINA_TIME_ZONE);
@@ -87,17 +96,17 @@ public class TimeEntityRecognizer {
     /**
      * @param text     text
      * @param timeZone TimeZone
-     * @return res
+     * @return List<TimeEntity>
      */
     public List<TimeEntity> parse(String text, TimeZone timeZone) {
         return parse(text, timeZone, Calendar.getInstance(timeZone).getTime());
     }
 
     /**
-     * @param text     text
+     * @param text     解析文本
      * @param timeZone timeZone
      * @param relative relative
-     * @return res
+     * @return List<TimeEntity>
      */
     public List<TimeEntity> parse(String text, TimeZone timeZone, Date relative) {
         List<TimeEntity> result = new ArrayList<>();
@@ -127,6 +136,7 @@ public class TimeEntityRecognizer {
                     lastRelative,
                     lastRelative.equals(relative),
                     timeEntity);
+
             if (null != date) {
                 lastRelative = date;
                 //识别时间循环，放到这里因为要考虑实体字符串的上下文，而时间实体中只是有识别出的时间字符串，缺乏上下文信息
@@ -281,7 +291,7 @@ public class TimeEntityRecognizer {
     /**
      * 对于arr数组中头部==-1的元素，用相对时间替换，同时对于当天已经是过去的时间表达，偏移到当天12小时之后
      *
-     * @param text              需要解析的文本
+     * @param text              解析文本
      * @param arr               arr
      * @param timeZone          t
      * @param relative          t
@@ -491,7 +501,7 @@ public class TimeEntityRecognizer {
     private static final Pattern THREE_QUARTER_PATTERN = Pattern.compile("(?<=[点时])[3三]刻(?!钟)");
 
     /**
-     * @param text 需要解析的文本
+     * @param text 解析文本
      * @return res
      */
     private int parseMinute(String text) {
@@ -824,8 +834,8 @@ public class TimeEntityRecognizer {
         Calendar calendar = Calendar.getInstance(timeZone);
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
         calendar.setTime(relative);
-
-        boolean[] flag = {false, false, false};//观察时间表达式是否因当前相关时间表达式而改变时间
+        //观察时间表达式是否因当前相关时间表达式而改变时间
+        boolean[] flag = {false, false, false};
 
         if (text.contains("前年")) {
             calendar.add(Calendar.YEAR, -2);
