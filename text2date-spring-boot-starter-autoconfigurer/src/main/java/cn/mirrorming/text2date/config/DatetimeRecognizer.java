@@ -2,8 +2,7 @@ package cn.mirrorming.text2date.config;
 
 import cn.mirrorming.text2date.time.TimeEntity;
 import cn.mirrorming.text2date.time.TimeEntityRecognizer;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.util.Date;
@@ -15,9 +14,10 @@ import java.util.stream.Collectors;
  *
  * @author Mireal
  */
-@Data
 public class DatetimeRecognizer {
+    @Setter
     Text2DateProperties text2DateProperties;
+
     private TimeEntityRecognizer timeEntityRecognizer = new TimeEntityRecognizer();
 
     /**
@@ -27,7 +27,7 @@ public class DatetimeRecognizer {
      * @return {@link TimeEntity}
      * @throws IOException IO异常
      */
-    public List<TimeEntity> parse(String text) throws IOException {
+    public List<TimeEntity> parse(String text) {
         return timeEntityRecognizer.parse(text);
     }
 
@@ -38,7 +38,10 @@ public class DatetimeRecognizer {
      * @return {@link Date}
      * @throws IOException IO异常
      */
-    public List<Date> dateParse(String text) throws IOException {
-        return timeEntityRecognizer.parse(text).stream().map(TimeEntity::getValue).collect(Collectors.toList());
+    public List<Date> dateParse(String text) {
+        return timeEntityRecognizer.parse(text)
+                .stream()
+                .map(TimeEntity::getValue)
+                .collect(Collectors.toList());
     }
 }

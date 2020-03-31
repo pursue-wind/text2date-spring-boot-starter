@@ -147,7 +147,7 @@ public final class LunarGregorianConverter {
      * 农历年份的总天数
      *
      * @param year 农历年份
-     * @return
+     * @return res
      */
     private static int totalDaysOfYear(int year) {
         // 29*12

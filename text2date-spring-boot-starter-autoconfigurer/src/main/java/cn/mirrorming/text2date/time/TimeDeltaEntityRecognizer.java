@@ -29,7 +29,7 @@ public class TimeDeltaEntityRecognizer {
     private Pattern pattern;
     private List<String> regexList;
 
-    public TimeDeltaEntityRecognizer() throws IOException {
+    public TimeDeltaEntityRecognizer() {
         this(TimeDeltaEntityRecognizer.class.getResourceAsStream("/timedelta.regex"));
     }
 
@@ -43,12 +43,16 @@ public class TimeDeltaEntityRecognizer {
      * @param in InputStream
      * @throws IOException IO异常
      */
-    public TimeDeltaEntityRecognizer(InputStream in) throws IOException {
-        regexList = IOUtils.readLines(in, "UTF-8")
-                .stream()
-                .map(StringUtils::stripToNull)
-                .filter(item -> StringUtils.isNotEmpty(item) && !item.startsWith("#")).distinct()
-                .collect(Collectors.toList());
+    public TimeDeltaEntityRecognizer(InputStream in) {
+        try {
+            regexList = IOUtils.readLines(in, "UTF-8")
+                    .stream()
+                    .map(StringUtils::stripToNull)
+                    .filter(item -> StringUtils.isNotEmpty(item) && !item.startsWith("#")).distinct()
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            log.error("timedelta.regex 文件读取错误！");
+        }
         if (log.isTraceEnabled()) {
             log.trace("input regex[size={}, text={}]", regexList.size(), regexList);
         }

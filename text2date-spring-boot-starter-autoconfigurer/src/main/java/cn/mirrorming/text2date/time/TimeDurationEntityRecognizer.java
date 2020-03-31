@@ -6,6 +6,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -30,12 +31,8 @@ public class TimeDurationEntityRecognizer {
     private Pattern pattern;
     private List<String> regexList;
 
-    public TimeDurationEntityRecognizer() throws IOException {
+    public TimeDurationEntityRecognizer() {
         this(TimeDurationEntityRecognizer.class.getResourceAsStream("/duration.regex"));
-    }
-
-    public TimeDurationEntityRecognizer(String file) throws IOException {
-        this(new FileInputStream(file));
     }
 
     /**
@@ -44,18 +41,27 @@ public class TimeDurationEntityRecognizer {
      * @param in InputStream
      * @throws IOException IO异常
      */
-    public TimeDurationEntityRecognizer(InputStream in) throws IOException {
-        regexList = IOUtils.readLines(in, "UTF-8").stream().map(StringUtils::stripToNull)
-                .filter(item -> StringUtils.isNotEmpty(item) && !item.startsWith("#")).distinct()
-                .collect(Collectors.toList());
+    public TimeDurationEntityRecognizer(InputStream in) {
+        try {
+            regexList = IOUtils.readLines(in, "UTF-8").stream()
+                    .map(StringUtils::stripToNull)
+                    .filter(item -> StringUtils.isNotEmpty(item) && !item.startsWith("#"))
+                    .distinct()
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            log.error("文件读取错误！");
+        }
         if (log.isTraceEnabled()) {
             log.trace("input regex[size={}, text={}]", regexList.size(), regexList);
         }
         long start = System.currentTimeMillis();
-        this.pattern = Pattern.compile(regexList.stream().map(item -> "(" + item + ")").collect(Collectors.joining("|")));
+
+        this.pattern = Pattern.compile(regexList.stream()
+                .map(item -> "(" + item + ")")
+                .collect(Collectors.joining("|")));
+
         long end = System.currentTimeMillis();
-        log.info("pattern initialized for {} patterns, time used(ms):{}", regexList.size(),
-                (end - start));
+        log.info("pattern initialized for {} patterns, time used(ms):{}", regexList.size(), (end - start));
     }
 
     /**

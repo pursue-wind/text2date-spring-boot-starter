@@ -11,6 +11,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = "spring.text2date")
 public class Text2DateProperties {
-    private String prefix;
-    private String suffix;
+    private String regx;
+    private String result;
 }
