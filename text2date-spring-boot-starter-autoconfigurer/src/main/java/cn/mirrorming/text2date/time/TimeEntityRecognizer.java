@@ -73,7 +73,7 @@ public class TimeEntityRecognizer {
         //读取pattern
         this.pattern = Pattern.compile(regexList.stream().map(item -> "(" + item + ")").collect(Collectors.joining("|")));
         long end = System.currentTimeMillis();
-        log.info("pattern initialized for {} patterns, time used(ms):{}", regexList.size(), (end - start));
+//        log.info("pattern initialized for {} patterns, time used(ms):{}", regexList.size(), (end - start));
     }
 
     /**

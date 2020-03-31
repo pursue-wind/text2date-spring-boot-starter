@@ -1,4 +1,23 @@
 # 提取中文文本里面的时间 text2date-spring-boot-starter
+## 使用
+### 添加依赖
+```xml
+<dependency>
+    <groupId>io.github.mirrormingzz</groupId>
+    <artifactId>text2date-spring-boot-starter</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+### 注入`DatetimeRecognizer`, 使用dateParse()/parse()进行文本解析
+```java
+@Autowired
+private DatetimeRecognizer datetimeRecognizer;
+
+List<Date> dates = datetimeRecognizer.dateParse("明天下午四点到五点去看电影");
+
+List<TimeEntity> timeEntities = datetimeRecognizer.parse("明天下午四点到五点去看电影");
+```
+
 
 - 2020-3-27 添加：半小时前/后和xx小时前/后 的解析
 
