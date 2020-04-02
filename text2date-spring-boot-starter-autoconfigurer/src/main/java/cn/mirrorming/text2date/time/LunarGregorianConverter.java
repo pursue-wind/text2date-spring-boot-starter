@@ -163,8 +163,8 @@ public final class LunarGregorianConverter {
     /**
      * 农历 year年闰月的天数
      *
-     * @param year
-     * @return
+     * @param year 年
+     * @return year年闰月的天数
      */
     private static int leapDays(int year) {
         int result = 0;
@@ -178,7 +178,7 @@ public final class LunarGregorianConverter {
      * 传农历 year年闰哪个月 1-12 , 没闰传回 0
      *
      * @param year 农历年份
-     * @return
+     * @return year年闰哪个月 1-12 , 没闰传回 0
      */
     private static int leapMonth(int year) {
         return (lunarInfo[year - 1900] & 0xf);
@@ -187,9 +187,9 @@ public final class LunarGregorianConverter {
     /**
      * 农历 y 年 m 月的总天数
      *
-     * @param y
-     * @param m
-     * @return
+     * @param y y 年
+     * @param m m 月
+     * @return 总天数
      */
     private static int monthDays(int y, int m) {
         return ((lunarInfo[y - 1900] & (0x10000 >> m)) == 0 ? 29 : 30);
@@ -277,7 +277,7 @@ public final class LunarGregorianConverter {
      * 获取偏移量对应的干支, 0=甲子
      *
      * @param num 偏移量（年or月or日）
-     * @return
+     * @return 偏移量对应的干支
      */
     private static String cyclical(int num) {
         return (Gan[num % 10] + Zhi[num % 12]);
@@ -286,8 +286,8 @@ public final class LunarGregorianConverter {
     /**
      * 中文日期
      *
-     * @param day
-     * @return
+     * @param day 天数
+     * @return 中文日期
      */
     private static String chineseDay(int day) {
         String result;
@@ -313,8 +313,8 @@ public final class LunarGregorianConverter {
     /**
      * 大写年份
      *
-     * @param y
-     * @return
+     * @param y 年
+     * @return 大写年份
      */
     public static String chineseYear(int y) {
         String s = " ";

@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.github.mirrormingzz</groupId>
     <artifactId>text2date-spring-boot-starter-autoconfigurer</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <name>text2date-spring-boot-starter-autoconfigurer</name>
     <description>For extracting time in Chinese text</description>
     <url>https://github.com/mirrormingzZ/text2date-spring-boot-starter</url>
@@ -164,6 +164,17 @@
                     </plugin>
                 </plugins>
             </build>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
         </profile>
     </profiles>
+
 </project>
