@@ -640,8 +640,8 @@ public class TimeEntityRecognizer {
         }
     }
 
-    private static final Pattern HALF_AN_HOUR_BEFORE_PATTERN = Pattern.compile("(\\d?+(个?+半+个?+小时[以之]?前))");
-    private static final Pattern HALF_AN_HOUR_AFTER_PATTERN = Pattern.compile("(\\d?+(个?+半+个?+小时[以之]?后))");
+    private static final Pattern HALF_AN_HOUR_BEFORE_PATTERN = Pattern.compile("(\\d?+(个?+半+个?+(小时|钟头)[以之]?前))");
+    private static final Pattern HALF_AN_HOUR_AFTER_PATTERN = Pattern.compile("(\\d?+(个?+半+个?+(小时|钟头)[以之]?后))");
 
     private static final Pattern MINUTE_BEFORE_PATTERN = Pattern.compile("(\\d+(?=分钟[以之]?前))|((?<=提前)\\d+(?=分钟))");
     private static final Pattern MINUTE_AFTER_PATTERN = Pattern.compile("\\d+(?=分钟[以之]?后)");
