@@ -8,11 +8,13 @@
     <version>1.0.3</version>
 </dependency>
 ```
-### 注入`DatetimeRecognizer`, 使用dateParse()/parse()进行文本解析
+### 注入`DatetimeRecognizer`
 ```java
 @Autowired
 private DatetimeRecognizer datetimeRecognizer;
-
+```
+### 使用dateParse()/parse()进行文本解析
+```java
 List<Date> dates = datetimeRecognizer.dateParse("半个小时后提醒我去买票");
 
 List<TimeEntity> timeEntities = datetimeRecognizer.parse("明天下午四点到五点去看电影");
@@ -22,7 +24,7 @@ List<TimeEntity> timeEntities = datetimeRecognizer.parse("明天下午四点到�
 - 2020-4-2 修复：半个小时，半个钟头前/后和xx小时前/后 的解析
 - 2020-3-27 添加：半小时前/后和xx小时前/后 的解析
 
-###TODO:
+### TODO:
 - 节假日解析
 - 时间短语解析
 - 是否倾向未来时间可配置
