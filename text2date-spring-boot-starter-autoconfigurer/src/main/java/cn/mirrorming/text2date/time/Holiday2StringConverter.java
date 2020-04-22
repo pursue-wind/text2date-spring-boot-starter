@@ -5,10 +5,14 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 /**
+ * 节假日转换器
+ *
  * @author Mireal
- * @date 2020/4/22 15:02
  */
 public class Holiday2StringConverter {
+    /**
+     * HOLIDAY
+     */
     public final static String[] HOLIDAY = {
             "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至",
 
@@ -185,7 +189,12 @@ public class Holiday2StringConverter {
     }
 
 
-    // 节日转化为时间
+    /**
+     * 节日转化为时间
+     *
+     * @param holiday 文本
+     * @return String yyyy年MM月dd日 or null
+     */
     public static String holidayDate(String holiday) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
         // 处理 感恩节、父亲节、母亲节等这类的节日
