@@ -180,9 +180,20 @@ public class TimeEntityRecognizer {
     /**
      * 参考StringPreHandlingModule, 将中文表达的日期、时间转化为数字表达
      */
-    static final Pattern NUMBER_P = Pattern.compile("[一二两三四五六七八九十]+");
+    private static final Pattern NUMBER_P = Pattern.compile("[一二两三四五六七八九十]+");
 
+    /**
+     * 字符串预处理
+     *
+     * @param text 文本
+     * @return String 处理后的
+     */
     private String normalizeTimeString(String text) {
+        //节假日转换
+        String holidayRes = Holiday2StringConverter.holidayDate(text);
+        if (null != holidayRes) {
+            text = holidayRes;
+        }
         text = text.replace("周日", "周7").replace("：", ":");
         text = text.replace("周天", "周7");
         text = text.replace("星期日", "星期7");

@@ -4,6 +4,8 @@ import lombok.Data;
 
 /**
  * 持续时间
+ *
+ * @author Mireal
  */
 @Data
 public class TimeDurationEntity {

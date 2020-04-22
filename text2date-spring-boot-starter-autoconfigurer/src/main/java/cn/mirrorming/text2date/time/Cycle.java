@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 
 /**
  * Cycle
+ *
+ * @author Mireal
  */
 @Data
 public class Cycle {

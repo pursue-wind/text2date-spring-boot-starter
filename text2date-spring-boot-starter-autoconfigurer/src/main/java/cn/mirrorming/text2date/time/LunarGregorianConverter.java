@@ -15,6 +15,10 @@ public final class LunarGregorianConverter {
     private Calendar calendar;
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.M.d EEEEE");
 
+    public Calendar getCalendar() {
+        return calendar;
+    }
+
     /**
      * http://blog.csdn.net/onlyonecoder/article/details/8484118
      */
@@ -43,12 +47,12 @@ public final class LunarGregorianConverter {
     /**
      * 节气
      */
-    private final static long[] STermInfo = new long[]{0, 21208, 42467,
+    private final static long[] S_TERM_INFO = new long[]{0, 21208, 42467,
             63836, 85337, 107014, 128867, 150921, 173149, 195551, 218072,
             240693, 263343, 285989, 308563, 331033, 353350, 375494, 397447,
             419210, 440795, 462224, 483532, 504758};
 
-    private static final String[] SolarTerm = new String[]{"小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至"};
+    private static final String[] SOLAR_TERM = new String[]{"小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至"};
 
     /**
      * 键值：0-7位表示日期，8-11位表示月份，5-7位与12-15位恒为0
@@ -378,11 +382,11 @@ public final class LunarGregorianConverter {
         int m = calendar.get(Calendar.MONTH);
         int d = calendar.get(Calendar.DAY_OF_MONTH);
         String solarTerms;
-        if (d == sTerm(y, m * 2))
-            solarTerms = SolarTerm[m * 2];
-        else if (d == sTerm(y, m * 2 + 1))
-            solarTerms = SolarTerm[m * 2 + 1];
-        else {
+        if (d == sTerm(y, m * 2)) {
+            solarTerms = SOLAR_TERM[m * 2];
+        } else if (d == sTerm(y, m * 2 + 1)) {
+            solarTerms = SOLAR_TERM[m * 2 + 1];
+        } else {
             // 到这里说明非节气时间
             solarTerms = null;
         }
@@ -398,7 +402,7 @@ public final class LunarGregorianConverter {
         Calendar cal = Calendar.getInstance();
         cal.set(1900, 0, 6, 2, 5, 0);
         long temp = cal.getTime().getTime();
-        cal.setTimeInMillis((long) ((31556925974.7 * (y - 1900) + STermInfo[n] * 60000L) + temp));
+        cal.setTimeInMillis((long) ((31556925974.7 * (y - 1900) + S_TERM_INFO[n] * 60000L) + temp));
         return cal.get(Calendar.DAY_OF_MONTH);
     }
 
@@ -449,6 +453,7 @@ public final class LunarGregorianConverter {
         convert();
     }
 
+
     public static void main(String[] args) {
         LunarGregorianConverter lunarGregorianConverter = new LunarGregorianConverter();
         boolean bigMonth = lunarGregorianConverter.isBigMonth(2019, 2);
@@ -456,6 +461,7 @@ public final class LunarGregorianConverter {
         String s2 = lunarGregorianConverter.getHoliday();
         String s3 = lunarGregorianConverter.getHoliday();
         String s4 = lunarGregorianConverter.getLunarMonth();
+        String s5 = LunarGregorianConverter.chineseYear(2019);
         System.out.println(bigMonth);
     }
 }
