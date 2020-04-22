@@ -5,7 +5,7 @@
 <dependency>
     <groupId>io.github.mirrormingzz</groupId>
     <artifactId>text2date-spring-boot-starter</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 </dependency>
 ```
 ### 注入`DatetimeRecognizer`
