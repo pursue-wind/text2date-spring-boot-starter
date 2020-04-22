@@ -194,6 +194,8 @@ public class TimeEntityRecognizer {
         if (null != holidayRes) {
             text = holidayRes;
         }
+        text = text.replace("礼拜", "星期");
+        text = text.replace("今儿", "今天");
         text = text.replace("周日", "周7").replace("：", ":");
         text = text.replace("周天", "周7");
         text = text.replace("星期日", "星期7");

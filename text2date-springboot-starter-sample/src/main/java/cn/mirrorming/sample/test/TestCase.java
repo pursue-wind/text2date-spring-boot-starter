@@ -28,24 +28,26 @@ public class TestCase {
     @Test
     public void singleTest() {
 //        List<Date> dates = datetimeRecognizer.dateParse("明天下午四点到五点去看电影");
-        List<TimeEntity> timeEntities = datetimeRecognizer.parse("明天下午四点到五点去看电影");
+        List<TimeEntity> timeEntities = datetimeRecognizer.parse("提醒我感恩节去北京开会");
 //        System.out.println(dates);
         System.out.println(timeEntities);
     }
 
     @Test
     @SneakyThrows
-    public void testCase() throws Exception {
+    public void testCase() {
         @Cleanup InputStream inputStream = this.getClass().getResourceAsStream("/testCase.txt");
 
         @Cleanup InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
 
         @Cleanup BufferedReader br = new BufferedReader(isr);
-
+        System.out.println("------------------------- Start -------------------------");
         br.lines().filter(str -> !StringUtils.isEmpty(str)).forEach(t -> {
+            System.out.println("------------------------------------------------------");
             System.err.println("文本为----->" + t);
             List<Date> dates = datetimeRecognizer.dateParse(t);
             dates.forEach(date -> System.out.println(SDF.format(date)));
+            System.out.println("------------------------------------------------------");
         });
     }
 
