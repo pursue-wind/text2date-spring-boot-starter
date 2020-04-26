@@ -6,7 +6,7 @@
 
     <groupId>io.github.mirrormingzz</groupId>
     <artifactId>text2date-spring-boot-starter</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <name>text2date-spring-boot-starter</name>
     <description>For extracting time in Chinese text</description>
     <url>https://github.com/mirrormingzZ/text2date-spring-boot-starter</url>
@@ -59,7 +59,7 @@
         <dependency>
             <groupId>io.github.mirrormingzz</groupId>
             <artifactId>text2date-spring-boot-starter-autoconfigurer</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.5</version>
         </dependency>
     </dependencies>
     <profiles>

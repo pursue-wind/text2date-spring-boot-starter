@@ -15,8 +15,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: io.github.mirrormingzz:text2date-spring-boot-starter:1.0.3" level="project" />
-    <orderEntry type="library" name="Maven: io.github.mirrormingzz:text2date-spring-boot-starter-autoconfigurer:1.0.3" level="project" />
+    <orderEntry type="module" module-name="text2date-spring-boot-starter" />
+    <orderEntry type="module" module-name="text2date-spring-boot-starter-autoconfigurer" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.9" level="project" />
     <orderEntry type="library" name="Maven: com.fulmicoton:multiregexp:0.5.1" level="project" />

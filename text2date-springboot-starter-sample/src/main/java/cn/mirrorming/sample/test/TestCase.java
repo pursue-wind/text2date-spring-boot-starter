@@ -16,6 +16,8 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,7 +30,8 @@ public class TestCase {
     @Test
     public void singleTest() {
 //        List<Date> dates = datetimeRecognizer.dateParse("明天下午四点到五点去看电影");
-        List<TimeEntity> timeEntities = datetimeRecognizer.parse("提醒我感恩节去北京开会");
+        List<TimeEntity> timeEntities = datetimeRecognizer.parse("20分钟后去北京开会");
+//        List<TimeEntity> timeEntities = datetimeRecognizer.parse("明天下午两点40到3:40去北京开会");
 //        System.out.println(dates);
         System.out.println(timeEntities);
     }
@@ -50,5 +53,6 @@ public class TestCase {
             System.out.println("------------------------------------------------------");
         });
     }
+
 
 }
